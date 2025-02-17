@@ -101,7 +101,7 @@ class uNet(nn.Module):
         Input: 3x200(3 channels(E=East,N=North,Z=Vertical), 50x4 samples)
         Output: 3x200(Probabilities for P-pick, S-pick and noise)
     """
-    def __init__(self, in_channels=3, out_channels=1, model_id=""):
+    def __init__(self, in_channels=3, out_channels=3, model_id=""):
         super(uNet, self).__init__()
         self.in_channels = in_channels
         self.out_channels = out_channels
