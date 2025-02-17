@@ -27,11 +27,18 @@ class lastconv1x1(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, padding=1):
         super(lastconv1x1, self).__init__()
         self.conv = nn.Conv1d(in_channels, out_channels, kernel_size, stride, padding)
+        self.fc = nn.Linear(200*out_channels, 1)
         
     def forward(self, x):
         # print("Last Convolution")
-        x = F.sigmoid(self.conv(x))
+        x = F.relu(self.conv(x))
+        # Flatten Layer
+        x = torch.flatten(x, start_dim = 1)
+        # Fully Connected Layer
+        x = self.fc(x)
+        # Sigmoid is applied with loss function 
         # print(f"After last convolution - x shape: {x.shape}")
+        # print(x)
         return x
     
 class DownSampling(nn.Module):
