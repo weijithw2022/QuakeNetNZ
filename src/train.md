@@ -6,4 +6,6 @@ I have written code to,
 
 The things you might want to try it out @danukaravishan, 
 
-1. Add two FC layers(one hidden FC), uncomment necessary code in lastconv1x1 class
+1. Try different thresholds other than 0.5 to reduce false positives. (Try drawing precision vs recall curves)
+2. Add two FC layers(one hidden FC); uncomment necessary code in lastconv1x1 class. Note that this will overfit the dataset, so add LP Regularization or dropout.
+3. 
