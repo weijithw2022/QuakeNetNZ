@@ -28,6 +28,8 @@ class lastconv1x1(nn.Module):
         super(lastconv1x1, self).__init__()
         self.conv = nn.Conv1d(in_channels, out_channels, kernel_size, stride, padding)
         self.fc = nn.Linear(200*out_channels, 1)
+        #self.fc1 = nn.Linear(200*out_channels, 128)
+        #self.fc2 = nn.Linear(128, 1)
         
     def forward(self, x):
         # print("Last Convolution")
@@ -39,6 +41,8 @@ class lastconv1x1(nn.Module):
         # Sigmoid is applied with loss function 
         # print(f"After last convolution - x shape: {x.shape}")
         # print(x)
+        # x = self.fc1(x)
+        # x = self.fc2(x)
         return x
     
 class DownSampling(nn.Module):
