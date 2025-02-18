@@ -1,4 +1,3 @@
-
 from utils import *
 from database_op import *
 from config import Config, MODE_TYPE, MODEL_TYPE
@@ -29,9 +28,10 @@ def test(cfg):
       raise ValueError(f"No model found as :{cfg.MODEL_FILE_NAME}")
    
    model = None
-
+   print("Model before loading checkpoint:\n", model)
    checkpoint = torch.load(cfg.MODEL_FILE_NAME)
    loadModelConfig(nncfg, checkpoint)
+   print("Model after loading checkpoint:\n", model)
 
 
    if cfg.MODEL_TYPE == MODEL_TYPE.DNN:
@@ -39,12 +39,14 @@ def test(cfg):
    elif cfg.MODEL_TYPE == MODEL_TYPE.CNN:
       model = PWaveCNN(model_id=nncfg.model_id, window_size=cfg.SAMPLE_WINDOW_SIZE)
    elif cfg.MODEL_TYPE == MODEL_TYPE.UNET:
-      model = UNet(model_id=nncfg.model_id, in_channels=cfg.UNET_INPUT_SIZE, out_channels=cfg.UNET_OUTPUT_SIZE)
+      model = uNet(model_id=nncfg.model_id, in_channels=cfg.UNET_INPUT_SIZE, out_channels=cfg.UNET_OUTPUT_SIZE)
    else:
       raise ValueError(f"Invalid model type: {cfg.MODEL_TYPE}")
 
    model.load_state_dict(checkpoint['model_state_dict'])
+
    model.eval()
+   print("Model after loading checkpoint:\n", model)
 
    hdf5_file = h5py.File(cfg.TEST_DATA, 'r')
    p_data, s_data, noise_data = getWaveData(cfg, hdf5_file)
@@ -63,8 +65,8 @@ def test(cfg):
    with torch.no_grad():  # Disable gradients during inference
       predictions = model(test_tensor)
 
-   predicted_classes = torch.argmax(predictions, dim=1)
-   #predicted_classes = ((predictions >= 0.9).int()).squeeze() # Use detection threshold as 0.5 
+   #predicted_classes = torch.argmax(predictions, dim=1)
+   predicted_classes = ((predictions >= 0.5).int()).squeeze() # Use detection threshold as 0.x
    
    #Calculate the accuracy. This is tempory calculation
    true_tensor = torch.tensor(true_vrt, dtype=torch.long) 
