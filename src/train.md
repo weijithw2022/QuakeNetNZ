@@ -4,4 +4,6 @@ I have written code to,
 2. Binary Classification instead of Multi-class segmentation.
 3. Test the model's performance according to the threshold. 
 
-The things you might want to try it out, 
+The things you might want to try it out @danukaravishan, 
+
+1. Add two FC layers(one hidden FC), uncomment necessary code in lastconv1x1 class
