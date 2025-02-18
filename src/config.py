@@ -59,7 +59,7 @@ class Config:
 
         # UNET parameters
         self.UNET_INPUT_SIZE = 3
-        self.UNET_OUTPUT_SIZE = 3
+        self.UNET_OUTPUT_SIZE = 1
 
 
 class NNCFG:
@@ -68,8 +68,8 @@ class NNCFG:
         self.epoch_count            = 4
         self.batch_size             = 32
 
-        self.adam_beta1             = 0.1
-        self.adam_beta2             = 0.1
+        self.adam_beta1             = 0.9
+        self.adam_beta2             = 0.999
         self.adam_gamma             = 0.1
 
         self.detection_threshold    = 0.5
