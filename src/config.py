@@ -21,7 +21,7 @@ class Config:
     def __init__(self):
         
         #set program mode
-        self.MODE               = MODE_TYPE.ALL
+        self.MODE               = MODE_TYPE.PREDICT
 
         self.MODEL_TYPE         = MODEL_TYPE.UNET
         # File paths
