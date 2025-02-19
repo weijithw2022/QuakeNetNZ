@@ -1,6 +1,6 @@
 from utils import *
 from database_op import *
-from config import Config, MODE_TYPE, MODEL_TYPE
+from config import Config, MODE_TYPE, MODEL_TYPE, NNCFG
 
 def loadModelConfig(nncfg, checkpoint):
 
@@ -28,10 +28,10 @@ def test(cfg):
       raise ValueError(f"No model found as :{cfg.MODEL_FILE_NAME}")
    
    model = None
-   print("Model before loading checkpoint:\n", model)
+   # print("Model before loading checkpoint:\n", model)
    checkpoint = torch.load(cfg.MODEL_FILE_NAME)
    loadModelConfig(nncfg, checkpoint)
-   print("Model after loading checkpoint:\n", model)
+   # print("Model after loading checkpoint:\n", model)
 
 
    if cfg.MODEL_TYPE == MODEL_TYPE.DNN:
@@ -46,7 +46,7 @@ def test(cfg):
    model.load_state_dict(checkpoint['model_state_dict'])
 
    model.eval()
-   print("Model after loading checkpoint:\n", model)
+   # print("Model after loading checkpoint:\n", model)
 
    hdf5_file = h5py.File(cfg.TEST_DATA, 'r')
    p_data, s_data, noise_data = getWaveData(cfg, hdf5_file)
@@ -66,7 +66,7 @@ def test(cfg):
       predictions = model(test_tensor)
 
    #predicted_classes = torch.argmax(predictions, dim=1)
-   predicted_classes = ((predictions >= 0.5).int()).squeeze() # Use detection threshold as 0.x
+   predicted_classes = ((predictions >= nncfg.detection_threshold).int()).squeeze() # Use detection threshold as 0.x
    
    #Calculate the accuracy. This is tempory calculation
    true_tensor = torch.tensor(true_vrt, dtype=torch.long) 
