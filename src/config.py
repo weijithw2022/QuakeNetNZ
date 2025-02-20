@@ -81,7 +81,7 @@ class NNCFG:
 
 
 
-    def argParser(self):
+    def argParser(self, cfg: Config):
         parser = argparse.ArgumentParser()
 
         # Add arguments
@@ -92,6 +92,7 @@ class NNCFG:
         parser.add_argument('--adam_beta1', type=float, help='Beta 1 of Adam optimizer')
         parser.add_argument('--adam_beta2', type=float, help='Beta 2 of Adam optimizer')
         parser.add_argument('--adam_gamma', type=float, help='Gamma of Adam optimizer')
+        parser.add_argument('--model_file_name', type=str, help='Path to the model file')
         parser.add_argument('--detection_threshold', type=float, help='Detection threshold of when one output neuron exist')
 
         args = parser.parse_args()
@@ -103,6 +104,9 @@ class NNCFG:
         self.adam_beta1     = args.adam_beta1 if args.adam_beta1 is not None else self.adam_beta1
         self.adam_beta2     = args.adam_beta2 if args.adam_beta2 is not None else self.adam_beta2
         self.adam_gamma     = args.adam_gamma if args.adam_gamma is not None else self.adam_gamma
+
+        if args.model_file_name:
+            cfg.MODEL_FILE_NAME = args.model_file_name
 
         self.detection_threshold = args.detection_threshold if args.detection_threshold is not None else self.detection_threshold
 
