@@ -17,6 +17,7 @@ def test(cfg):
    
    print("Runnig for test set")
    nncfg = NNCFG()
+   nncfg.argParser(cfg)
 
    if cfg.MODEL_FILE_NAME == "models/model_default.pt":
       model_name = getLatestModelName(cfg)
