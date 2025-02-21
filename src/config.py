@@ -65,7 +65,7 @@ class Config:
 class NNCFG:
     def __init__(self):
         self.learning_rate          = 0.001
-        self.epoch_count            = 4
+        self.epoch_count            = 2
         self.batch_size             = 32
 
         self.adam_beta1             = 0.9
@@ -106,8 +106,14 @@ class NNCFG:
         self.adam_gamma     = args.adam_gamma if args.adam_gamma is not None else self.adam_gamma
 
         if args.model_file_name:
-            cfg.MODEL_FILE_NAME = args.model_file_name
+            cfg.MODEL_FILE_NAME = cfg.MODEL_PATH + args.model_file_name
 
         self.detection_threshold = args.detection_threshold if args.detection_threshold is not None else self.detection_threshold
 
-        print(f"Training Hyperparameter : Learning Rate = {self.learning_rate}, Epoch count = {self.epoch_count}, Batch Size = {self.batch_size}") # Add others upon on the requirement
+        mode_messages = {
+            MODE_TYPE.TRAIN: f"Training Hyperparameters: Learning Rate = {self.learning_rate}, Epoch count = {self.epoch_count}, Batch Size = {self.batch_size}",
+            MODE_TYPE.PREDICT: f"Detection Threshold = {self.detection_threshold}",
+            MODE_TYPE.ALL: f"Training Hyperparameters: Learning Rate = {self.learning_rate}, Epoch count = {self.epoch_count}, Batch Size = {self.batch_size}. Testing Hyperparameter: Detection Threshold = {self.detection_threshold}"
+            }
+        
+        print(mode_messages.get(cfg.MODE, "Invalid Mode"))
