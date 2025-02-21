@@ -30,7 +30,7 @@ def _train(model, dataloader, optimizer, criterion, epoch_iter=50):
 def train(cfg):
    
    nncfg = NNCFG()
-   nncfg.argParser()
+   nncfg.argParser(cfg)
 
    # print(cfg.TRAIN_DATA)
    hdf5_file = h5py.File(cfg.TRAIN_DATA, 'r')
