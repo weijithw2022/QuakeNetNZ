@@ -106,7 +106,7 @@ class NNCFG:
         self.adam_gamma     = args.adam_gamma if args.adam_gamma is not None else self.adam_gamma
 
         if args.model_file_name:
-            cfg.MODEL_FILE_NAME = cfg.MODEL_PATH + args.model_file_name
+            cfg.MODEL_FILE_NAME = cfg.MODEL_PATH + args.model_file_name + ".pt"
 
         self.detection_threshold = args.detection_threshold if args.detection_threshold is not None else self.detection_threshold
 
