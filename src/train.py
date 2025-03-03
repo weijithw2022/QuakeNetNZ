@@ -72,7 +72,7 @@ def train(cfg):
       model, train_losses = _train(model, dataloader, optimizer, criterion, nncfg.epoch_count)
    
    elif cfg.MODEL_TYPE == MODEL_TYPE.UNET:
-      model = uNet(samples= 100, in_channels=3, out_channels = 1).to(device)
+      model = uNet(samples=cfg.SAMPLE_WINDOW_SIZE, in_channels=3, out_channels = 1).to(device)
       # As they have used cross-entropy in the paper, I am using the same
       # criterion = nn.CrossEntropyLoss()
       # criterion = nn.BCELoss()
