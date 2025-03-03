@@ -40,7 +40,7 @@ def test(cfg):
    elif cfg.MODEL_TYPE == MODEL_TYPE.CNN:
       model = PWaveCNN(model_id=nncfg.model_id, window_size=cfg.SAMPLE_WINDOW_SIZE)
    elif cfg.MODEL_TYPE == MODEL_TYPE.UNET:
-      model = uNet(model_id=nncfg.model_id, in_channels=cfg.UNET_INPUT_SIZE, out_channels=cfg.UNET_OUTPUT_SIZE)
+      model = uNet(model_id=nncfg.model_id, samples=cfg.SAMPLE_WINDOW_SIZE, in_channels=cfg.UNET_INPUT_SIZE, out_channels=cfg.UNET_OUTPUT_SIZE)
    else:
       raise ValueError(f"Invalid model type: {cfg.MODEL_TYPE}")
 
