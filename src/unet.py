@@ -24,10 +24,10 @@ class lastconv1x1(nn.Module):
     """
         1x1 convolutional layer with and softmax Activation
     """
-    def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, padding=1):
+    def __init__(self, in_channels, out_channels, samples, kernel_size=3, stride=1, padding=1):
         super(lastconv1x1, self).__init__()
         self.conv = nn.Conv1d(in_channels, out_channels, kernel_size, stride, padding)
-        self.fc = nn.Linear(200*out_channels, 1)
+        self.fc = nn.Linear(samples*out_channels, 1)
         #self.fc1 = nn.Linear(200*out_channels, 128)
         #self.fc2 = nn.Linear(128, 1)
         
@@ -105,8 +105,9 @@ class uNet(nn.Module):
         Input: 3x200(3 channels(E=East,N=North,Z=Vertical), 50x4 samples)
         Output: 3x200(Probabilities for P-pick, S-pick and noise)
     """
-    def __init__(self, in_channels=3, out_channels=3, model_id=""):
+    def __init__(self, samples, in_channels=3, out_channels=3, model_id=""):
         super(uNet, self).__init__()
+        self.samples = samples
         self.in_channels = in_channels
         self.out_channels = out_channels
         
@@ -136,7 +137,7 @@ class uNet(nn.Module):
             ins = self.up_channels[i]
             outs = self.up_channels[i+1]
             self.up_layers.append(UpSampling(in_channels=ins, out_channels=outs))
-        self.up_layers.append(lastconv1x1(in_channels=self.up_channels[-1], out_channels=self.out_channels))
+        self.up_layers.append(lastconv1x1(in_channels=self.up_channels[-1], out_channels=self.out_channels, samples = self.samples))
     
     def forward(self,x):
         skip_connections = []
